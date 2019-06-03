@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,13 +15,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "questions")
 public class Question implements Serializable{
 	
-	public enum AnswerType { STRING, NUMBER, SINGLE_SELECT, MULTI_SELECT }
+	public enum AnswerType { STRING, NUMBER, SINGLESELECT, MULTISELECT }
 
 	private static final long serialVersionUID = 1L;
 	
@@ -28,8 +30,9 @@ public class Question implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(nullable = false)
+	@ToString.Exclude
 	// default column name "screener_id"; the screener to which the question belongs
 	private Screener screener;
 	
@@ -44,5 +47,4 @@ public class Question implements Serializable{
 	// answer type informs how the question should be presented in UI and how responses
 	// should be interpreted when read from mongodb.
 	private AnswerType answerType;
-	
 }

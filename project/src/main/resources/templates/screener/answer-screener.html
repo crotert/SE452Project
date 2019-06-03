@@ -1,0 +1,44 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/header :: common-header">
+    </head>
+    <body>
+	    <div class="container">
+	        <h1 th:text="${screener.getCourse().getCourseCode()} + ${screener.getCourse().getCourseNumber()} + ' Entrance Questionnaire'"></h1>
+	        <p th:text="${screener.description}"></p>
+	        <div th:switch="${questions.isEmpty()}">
+		        <p th:case="true">No Questions Available</p>
+		        <form th:case="false">
+		        	<div class="form-group" th:each="question, iStat: ${questions}" th:switch="${question.getAnswerType().toString()}">
+		        		<h4 for="questionNumber" th:text="'Question ' + ${iStat.index + 1}"></h4>
+						<p th:text="${question.getPrompt()}"></p>
+		        		<div th:case="STRING">
+		        			<input type="text" class="form-control" placeholder="text answer"></input>
+		        		</div>
+		        		<div th:case="NUMBER">
+		        			<input type="number" class="form-control" placeholder="numeric answer"></input>
+		        		</div>
+		        		<div th:case="SINGLESELECT">
+	        				<div class="radio" th:each="option, iStat: ${optionSets.get(question.getId())}">
+							  <label>
+							    <input type="radio" name="optionsRadios" value="${option}" th:text="${option}">
+							  </label>
+							</div>
+		        		</div>
+		        		<div th:case="MULTISELECT">
+		        			<div class="checkbox" th:each="option, iStat: ${optionSets.get(question.getId())}">
+							  	<label>
+						    		<input type="checkbox" value="${option}" th:text="${option}">
+						    	</label>
+						  	</div>
+		        		</div>
+			        	<div th:case="*">Unrecognized question type!</div>
+		        	</div>
+		            <button type="button" class="btn btn-lg btn-secondary">Save Progress</button>
+		            <button type="button" class="btn btn-lg btn-primary">Save and Submit</button> 
+		        </form>
+	        </div>
+	    </div>
+	    <div th:replace="fragments/footer :: footer"></div>
+	</body>
+</html>

@@ -54,9 +54,10 @@ public class Course implements Serializable {
 	
 	private String courseTerm;
 	
-	/*@OneToOne (cascade = CascadeType.ALL)
-	@JoinColumn(name = "screener_id", referencedColumnName = "id")
-	private Screener screener;*/
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn
+	@ToString.Exclude
+	private Screener screener;
 	
 	@OneToMany (
 			mappedBy = "sectionCourse",
