@@ -1,5 +1,5 @@
 create table DeptChairs(
-  EmployeeID identity not null FOREIGN KEY REFERENCES PROFESSORS(employee_id) primary key, 
+  EmployeeID identity not null primary key, 
   Dept Varchar(50) not null);
   
 Insert into DeptChairs(EmployeeID, Dept)

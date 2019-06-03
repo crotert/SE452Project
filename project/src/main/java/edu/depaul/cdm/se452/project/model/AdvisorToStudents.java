@@ -17,17 +17,17 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "DeptChairs")
-public class DeptChair implements Serializable{
+@Table(name = "AdvisorToStudents")
+public class AdvisorToStudents implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@ID
-	@JoinColumn(nullable = false)
-	private int EmployeeID;
+	@Id
+	//@ManyToOne
+	//@JoinColumn(nullable = false)
+	private int employeeId;
 	
-	@Column(nullable = false)
-	private String Dept;
-	
+	//@JoinColumn(nullable = false)
+	private int studentId;
 	
 	
 }

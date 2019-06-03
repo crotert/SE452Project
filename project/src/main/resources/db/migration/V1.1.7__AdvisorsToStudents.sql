@@ -1,9 +1,9 @@
 Create table AdvisorToStudents(
-    EmployeeID int not null Foreign Key references PROFESSORS(employee_id),
-    StudentID int not null Foreign Key references STUDENTS(student_id) Primary Key);
+    employee_id int not null,
+    student_id int not null primary key);
     
-insert into AdvisorToStudents (EmployeeID,StudentID)
+insert into AdvisorToStudents (employee_id,student_id)
 Values(890890,321321);
 
-insert into AdvisorToStudents (EmployeeID,StudentID)
+insert into AdvisorToStudents (employee_id,student_id)
 Values(890890,123123);
