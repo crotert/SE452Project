@@ -99,11 +99,17 @@ public class ScreenerController implements WebMvcConfigurer {
 					|| answerType.equals(Question.AnswerType.MULTISELECT)) {
 				formAnswer.setOptions(optionsRepo.findByQuestionId(question.getId()).getOptions());
 			}
-
-			if (answerType.equals(Question.AnswerType.MULTISELECT)) {
-//				do nothing for now
-			} else {
-				formAnswer.setValue((answers != null) ? answers.get(question.getId()) : null);
+			
+			if (answers != null) {
+				String value = answers.get(question.getId());
+				if (value != null) {
+					if (answerType.equals(Question.AnswerType.MULTISELECT)) {
+						ArrayList<String> values = new ArrayList<>(Arrays.asList(value.split(",")));
+						formAnswer.setValues(values);
+					} else {
+						formAnswer.setValue(value);
+					}
+				}
 			}
 
 			formAnswers.add(formAnswer);
@@ -125,8 +131,11 @@ public class ScreenerController implements WebMvcConfigurer {
 
 		Map<Long, String> answerMap = new HashMap<>();
 		for (Answer formAnswer : answerForm.getAnswers()) {
-			// TODO do something about MULTISELECT
-			answerMap.put(formAnswer.getQuestionId(), formAnswer.getValue());
+			if (formAnswer.getType().equals(Question.AnswerType.MULTISELECT.toString())) {
+				answerMap.put(formAnswer.getQuestionId(), String.join(",",formAnswer.getValues()));
+			} else {
+				answerMap.put(formAnswer.getQuestionId(), formAnswer.getValue());	
+			}
 		}
 		
 		answerSet.setAnswers(answerMap);

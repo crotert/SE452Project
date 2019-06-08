@@ -16,4 +16,5 @@ public class AnswerSet {
 	private long screenerId;
 	private int studentId;
 	private Map<Long,String> answers;
+	private boolean submitted;
 }
