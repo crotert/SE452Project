@@ -4,13 +4,14 @@
     </head>
     <body>
 	    <div class="container">
-	        <h1 th:text="${answerForm.courseNickname} + ' Entrance Questionnaire'"></h1>
+	        <h1 th:text="${answerForm.courseNickname}"></h1>
+	        <h1>Entrance Questionnaire</h1>
 	        <p th:text="${answerForm.description}"></p>
 	        <div th:switch="${answerForm.answers.isEmpty()}">
 		        <p th:case="true">No Questions Available</p>
 		        <div th:case="false">
 			        <form action="#" th:action="@{/screener/__${answerForm.screenerId}__/answer}" th:object="${answerForm}" method="post">
-			        <fieldset th:disabled="false">
+			        <fieldset th:disabled="${answerForm.status.toString().equals('SUBMITTED')}">
 			        	<input type="hidden" th:field="*{studentId}">
 			        	<input type="hidden" th:field="*{screenerId}">
 			        	<input type="hidden" th:field="*{courseNickname}">
@@ -48,7 +49,7 @@
 			        		</div>
 				        	<div th:case="*" th:text="${answer.getType()} + ' Unrecognized question type!'"></div>
 			        	</div>
-			        	<div th:if="true">
+			        	<div th:unless="${answerForm.status.toString().equals('SUBMITTED')}">
 				            <button type="submit" name="action" value="save" class="btn btn-lg btn-secondary">Save Progress</button>
 				            <button type="submit" name="action" value="submit" class="btn btn-lg btn-primary">Save and Submit</button>
 			            </div> 

@@ -47,7 +47,14 @@ public class ScreenerController implements WebMvcConfigurer {
 	@GetMapping("all")
 	public String listScreeners(Model model) {
 		Iterable<Screener> screeners = repo.findAll();
-		model.addAttribute("screeners", screeners);
+		ArrayList<AnswerForm> answerForms = new ArrayList<>();
+		for (Screener screener : screeners) {
+			// TODO HARDCODED TO USE STUDENT ID 1
+			AnswerSet answerSet = answersRepo.findByScreenerIdAndStudentId(screener.getId(), 1);
+			AnswerForm answerForm = buildAnswerForm(screener, answerSet, false);
+			answerForms.add(answerForm);
+		}
+		model.addAttribute("answerForms", answerForms);
 		return "screener/all";
 	}
 
@@ -56,7 +63,7 @@ public class ScreenerController implements WebMvcConfigurer {
 		Optional<Screener> optionalScreener = repo.findById(screenerId);
 		if (optionalScreener.isPresent()) {
 			Screener screener = optionalScreener.get();
-			// TODO HARDCODED TO Use Student ID 1
+			// TODO HARDCODED TO USE STUDENT ID 1
 			AnswerSet answerSet = answersRepo.findByScreenerIdAndStudentId(screenerId, 1);
 			model.addAttribute("answerForm", buildAnswerForm(screener, answerSet));
 			return "screener/answer";
@@ -67,25 +74,46 @@ public class ScreenerController implements WebMvcConfigurer {
 
 	@PostMapping(value = "{screenerId}/answer", params = "action=save")
 	public String saveAnswers(@ModelAttribute AnswerForm answerForm, Model model) {
-		saveAnswersFromForm(answerForm);
+		saveAnswersFromForm(answerForm, false);
 		return "redirect:answer";
 	}
 
 	@PostMapping(value = "{screenerId}/answer", params = "action=submit")
 	public String submitAnswers(@ModelAttribute AnswerForm answerForm, Model model) {
-		saveAnswersFromForm(answerForm);
+		saveAnswersFromForm(answerForm, true);
 		return "redirect:/screener/all";
 	}
-
+	
 	private AnswerForm buildAnswerForm(Screener screener, AnswerSet answerSet) {
+		return buildAnswerForm(screener, answerSet, true);
+	}
+
+	private AnswerForm buildAnswerForm(Screener screener, AnswerSet answerSet, boolean setAnswers) {
 		AnswerForm answerForm = new AnswerForm();
 		// TODO parameterize student
 		answerForm.setStudentId(1);
 		answerForm.setScreenerId(screener.getId());
-		answerForm.setCourseNickname(screener.getCourse().getCourseCode() + screener.getCourse().getCourseNumber());
+		answerForm.setCourseNickname(
+				screener.getCourse().getCourseCode() + 
+				screener.getCourse().getCourseNumber() + 
+				" " +
+				screener.getCourse().getCourseDescription());
 		answerForm.setDescription(screener.getDescription());
-
+		
+		if (answerSet == null) {
+			answerForm.setStatus(AnswerForm.Status.UNSTARTED);
+		} else {
+			answerForm.setStatus(answerSet.isSubmitted() ? AnswerForm.Status.SUBMITTED : AnswerForm.Status.STARTED);
+		}
+		
 		Map<Long, String> answers = (answerSet != null) ? answerSet.getAnswers() : null;
+		if (setAnswers) {
+			setAnswers(screener, answers,answerForm);
+		}
+		return answerForm;
+	}
+	
+	private void setAnswers(Screener screener, Map<Long,String> answers, AnswerForm answerForm) {
 		ArrayList<Answer> formAnswers = new ArrayList<>();
 
 		for (Question question : screener.getQuestions()) {
@@ -111,15 +139,13 @@ public class ScreenerController implements WebMvcConfigurer {
 					}
 				}
 			}
-
 			formAnswers.add(formAnswer);
 		}
-
+		
 		answerForm.setAnswers(formAnswers);
-		return answerForm;
 	}
 
-	private AnswerSet saveAnswersFromForm(AnswerForm answerForm) {
+	private AnswerSet saveAnswersFromForm(AnswerForm answerForm, boolean submit) {
 		Long screenerId = answerForm.getScreenerId();
 		int studentId = answerForm.getStudentId();
 		AnswerSet answerSet = answersRepo.findByScreenerIdAndStudentId(screenerId, studentId);
@@ -136,6 +162,10 @@ public class ScreenerController implements WebMvcConfigurer {
 			} else {
 				answerMap.put(formAnswer.getQuestionId(), formAnswer.getValue());	
 			}
+		}
+		
+		if (submit) {
+			answerSet.setSubmitted(true);
 		}
 		
 		answerSet.setAnswers(answerMap);

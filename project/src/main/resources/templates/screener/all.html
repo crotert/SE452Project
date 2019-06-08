@@ -4,19 +4,25 @@
     </head>
     <body>
 	    <div class="container">
-	    	<h1>Available Screeners</h1>
+	    	<h1>Available Questionnaires</h1>
 			<table class="table">
 				<thead>
-					<th scope="col">Course</th>
-					<th scope="col">Status</th>
-					<th scope="col">Action</th>
+					<tr>
+						<th scope="col">Course</th>
+						<th scope="col">Status</th>
+						<th scope="col">Action</th>
+					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="screener : ${screeners}">
-						<td th:text="${screener.course.courseDescription}"></td>
-						<td>Test Status</td>
+					<tr th:each="answerForm : ${answerForms}">
+						<td th:text="${answerForm.courseNickname}"></td>
+						<td th:text="${answerForm.status}"></td>
 						<td>
-							<a th:href="${screener.id} + '/answer'" class="btn btn-sm btn-primary" role="button">Answer Questions</a>
+							<a th:href="${answerForm.screenerId} + '/answer'" 
+								class="btn btn-sm btn-block" 
+								role="button"
+								th:classAppend="${answerForm.status.toString().equals('SUBMITTED')} ? btn-outline-primary : btn-primary"
+								th:text="${answerForm.status.toString().equals('SUBMITTED') ? 'View' : 'Answer'}"></a>
 						</td>
 					</tr>
 				</tbody>
