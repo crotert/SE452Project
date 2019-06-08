@@ -1,0 +1,27 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/header :: common-header">
+    </head>
+    <body>
+	    <div class="container">
+	    	<h1>Available Screeners</h1>
+			<table class="table">
+				<thead>
+					<th scope="col">Course</th>
+					<th scope="col">Status</th>
+					<th scope="col">Action</th>
+				</thead>
+				<tbody>
+					<tr th:each="screener : ${screeners}">
+						<td th:text="${screener.course.courseDescription}"></td>
+						<td>Test Status</td>
+						<td>
+							<a th:href="${screener.id} + '/answer'" class="btn btn-sm btn-primary" role="button">Answer Questions</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+	    </div>
+	    <div th:replace="fragments/footer :: footer"></div>
+	</body>
+</html>
