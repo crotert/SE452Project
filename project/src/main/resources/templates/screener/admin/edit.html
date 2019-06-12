@@ -1,0 +1,78 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/header :: common-header">
+    </head>
+    <body>
+	    <div class="container">
+	        <h1 th:text="${questionForm.courseNickname}"></h1>
+	        <h2>Entrance Questionnaire</h2>
+	        <br/>
+	        <form action="#" th:action="@{/screener/admin}" th:object="${questionForm}" method="post">
+		        <fieldset th:disabled="${questionForm.status.toString().equals('PUBLISHED')}">
+		        	<input type="hidden" th:field="*{courseId}">
+		        	<input type="hidden" th:field="*{screener.id}">
+		        	
+		        	<div class="card mb-3">
+		        		<div class="card-body">
+				        	<div class="form-group">
+				        		<h4>Description</h4>
+				        		<textarea class="form-control" 
+				        			placeholder="description or instructions to accompany questions..." 
+				        			th:field="*{screener.description}"></textarea>	
+				        	</div>
+				        	<div th:unless="${questionForm.status.toString().equals('PUBLISHED')}">
+				        		<button type="submit" name="action" value="save" class="btn btn-sm btn-outline-success">Save</button>
+				        	</div>
+		        		</div>
+		        	</div> 		        	
+		        	<div th:unless="${questionForm.questions.isEmpty()}">
+		        		<div class="card mb-3" th:each="question, questionStat: ${questionForm.questions}">
+		        			<input type="hidden" th:if="${questionForm.optionSets[__${questionStat.index}__].getId() != null}" th:field="${questionForm.optionSets[__${questionStat.index}__].id}">
+		        			<input type="hidden" th:field="${questionForm.optionSets[__${questionStat.index}__].questionId}">
+		        			<input type="hidden" th:field="${questionForm.questions[__${questionStat.index}__].screener}">
+			        		<div class="card-body">
+				        		<div class="row">
+			        				<h4 class="card-title" th:text="'Question ' + ${questionStat.index + 1}"></h4>
+				        		</div>
+				        		<div class="form-group">
+					        		<label>Prompt</label>
+					        		<p th:text=${question.prompt}></p>
+			        			</div>
+			        			<div class="row">
+				        			<div class="col">
+					        			<div class="form-group">
+							        		<label>Answer Format</label>	
+							        		<p th:text=${question.answerType}></p>
+					        			</div>
+				        			</div>
+				        			<div class="col">
+				        				<div 
+				        					th:id="'optionSet' + ${questionStat.index}"
+				        					th:hidden="${question.answerType.toString().equals('STRING') || question.answerType.toString().equals('NUMBER')}">
+				        					<label>Options</label>
+				        					<ul>
+				        						<li th:each="option, optionStat: ${questionForm.optionSets[__${questionStat.index}__].options}" th:text=${option}>
+				        						</li>
+				        					</ul>
+				        					
+				        				</div>
+				        			</div>
+			        			</div>
+			        			<div th:unless="${questionForm.status.toString().equals('PUBLISHED')}">
+					        		<a th:href="@{/screener/admin(deleteQuestion,questionId=${question.id})}" class="btn btn-sm btn-outline-danger">Delete</a>
+					        		<a th:href="@{/screener/admin(editQuestion,questionId=${question.id})}" class="btn btn-sm btn-outline-success">Edit</a>
+					        	</div>
+		        			</div>
+		        		</div>
+		        		
+		        	</div>
+		        	<div th:unless="${questionForm.status.toString().equals('PUBLISHED')}" class="form-group mb-3">
+		        		<a th:href="@{/screener/admin(addQuestion,screenerId=${questionForm.screener.id})}" class="btn btn-success">Add Question</a>
+		        		<button type="submit" name="action" value="publish" class="btn btn-primary">Publish</button>
+		        	</div>
+		        </fieldset>
+	        </form>
+        </div>
+	    <div th:replace="fragments/footer :: footer"></div>
+	</body>
+</html>

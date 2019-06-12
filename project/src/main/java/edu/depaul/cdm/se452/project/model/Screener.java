@@ -1,8 +1,9 @@
 package edu.depaul.cdm.se452.project.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,8 +30,12 @@ public class Screener implements Serializable {
 	// optional description for screener, allows for notes or instructions from professor
 	private String description;
 	
+	@Column
+	private boolean published;
+	
+//	@OneToMany(mappedBy="screener", cascade = CascadeType.ALL, orphanRemoval=true)
 	@OneToMany(mappedBy="screener")
-	private Collection<Question> questions;
+	private List<Question> questions;
 	
 	@OneToOne(mappedBy="screener")
 	private Course course;
