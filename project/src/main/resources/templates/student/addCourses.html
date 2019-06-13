@@ -46,6 +46,9 @@
         			<tr>
         				<th> Course Number </th>
         				<th> Subject </th>
+        				<th> Description </th>
+        				<th> Credits </th>
+        				<th> Course Term </th>
         			</tr>
         		</thead>
         		<tbody>
@@ -55,6 +58,9 @@
         			<tr th:each="course: ${courses}">
         				<td><span th:text="${course.courseNumber}"> Course </span></td>
             			<td><span th:text="${course.subject}"> Subject </span></td>
+            			<td><span th:text="${course.courseDescription}"> Description </span>
+            			<td><span th:text="${course.courseCredits}"> Credits </span>
+            			<td><span th:text="${course.courseTerm}"> Term</span>
         			</tr>
         		</tbody>
         	</table>  

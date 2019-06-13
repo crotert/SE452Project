@@ -27,7 +27,7 @@ public class Section implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long sectionId;
+	private Long id;
 	
 	@Column
 	private int sectionNumber;
@@ -57,9 +57,9 @@ public class Section implements Serializable {
 	//number of seats available for the section
 	private int availableSeats;
 	
-	@Column
+	//@Column
 	//number of seats to have for students waiting to enroll
-	private int waitListSeats;
+	private int waitlistSeats;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
 	@JoinColumn(name = "section_course", nullable = false)
