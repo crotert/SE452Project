@@ -1,0 +1,34 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/header :: common-header">
+    </head>
+    <body>
+	    <div class="container">
+	    	<h1>Course Questionnaires</h1>
+	    	<p>Create and publish questionnaires for students to complete.</p>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Course</th>
+						<th scope="col">Status</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="questionForm : ${questionForms}">
+						<td th:text="${questionForm.courseNickname}"></td>
+						<td th:text="${questionForm.status}"></td>
+						<td>
+							<a th:href="@{/screener/admin(edit,courseId=${questionForm.courseId})}" 
+								class="btn btn-sm btn-block" 
+								role="button"
+								th:classAppend="${questionForm.status.toString().equals('PUBLISHED')} ? btn-outline-primary : btn-primary"
+								th:text="${questionForm.status.toString().equals('PUBLISHED') ? 'View' : 'Edit'}"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+	    </div>
+	    <div th:replace="fragments/footer :: footer"></div>
+	</body>
+</html>

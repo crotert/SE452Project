@@ -1,0 +1,79 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/header :: common-header">
+    </head>
+    <body>
+	    <div class="container">
+	        <h2>Edit Question</h2>
+	        <br/>
+	        <form action="#" th:action="@{/screener/admin}" th:object="${questionDetails}" method="post">
+		        <fieldset>
+		        	<input type="hidden" th:field="*{question.id}">
+		        	<input type="hidden" th:field="*{question.screener}">
+			        <input type="hidden" th:field="*{question.answerType}">
+			        <input type="hidden" th:field="*{optionSet.id}" th:if="*{optionSet.id}">
+					<input type="hidden" th:field="*{optionSet.questionId}">
+					<input type="hidden" th:field="*{optionSet.options}">
+
+	        		<div class="card mb-3">
+		        		<div class="card-body">
+			        		<div class="form-group">
+				        		<label>Prompt</label>	
+				        		<input type="text" class="form-control" placeholder="prompt" 
+				        			th:field="${questionDetails.question.prompt}"></input>
+		        			</div>
+		        			<div class="row">
+			        			<div class="col">
+				        			<div class="form-group">
+						        		<label>Answer Format</label>	
+										<div class="list-group">
+										<button
+												th:each="format : ${questionDetails.formats}" 
+												type="submit" 
+												name="newAnswerType" 
+												th:value="${format}"
+												th:text="${format}"
+												class="list-group-item list-group-item-action"
+												th:classAppend="${format.equals(questionDetails.question.answerType)} ? active :''"
+											></button>
+										</div>
+				        			</div>
+			        			</div>
+		        				<div class="col">
+			        				<div th:hidden="${questionDetails.question.answerType.toString().equals('STRING') || questionDetails.question.answerType.toString().equals('NUMBER')}">
+			        					<div class="form-group">
+				        					<label>Available Options</label>
+											<div class="form-group" th:each="option, optionStat: ${questionDetails.optionSet.options}">
+				        						<div class="row">
+				        							<div class="col">
+				        								<input 
+				        									type="text" 
+				        									class="form-control" 
+				        									th:field="${questionDetails.optionSet.options[__${optionStat.index}__]}"
+			        									></input>
+				        							</div>
+				        							<div class="col-auto">
+				        								<button type="submit" name="removeOption" th:value="${optionStat.index}" class="btn btn-outline-danger">remove</button>
+				        							</div>
+				        						</div>
+				        					</div>
+			        					</div>
+			        					<button type="submit" name="addOption" class="btn btn-outline-success">Add Option</button>
+			        				</div>
+		        				</div>
+		        			</div>
+		        			<div>
+		        				<a th:href="@{/screener/admin(deleteQuestion,questionId=*{question.id})}" class="btn btn-danger">Delete</a>
+				        		<button type="submit" name="saveQuestion" class="btn btn-primary">Save</button>
+				        	</div>
+	        			</div>
+		        	</div>
+		        	<div>
+		        		<a th:href="@{/screener/admin(edit,courseId=*{question.screener.course.id})}" class="btn btn-link">Return to Questionnaire</a>
+		        	</div>
+		        </fieldset>
+	        </form>
+        </div>
+	    <div th:replace="fragments/footer :: footer"></div>
+	</body>
+</html>

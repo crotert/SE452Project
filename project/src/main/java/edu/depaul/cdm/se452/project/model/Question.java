@@ -47,4 +47,14 @@ public class Question implements Serializable{
 	// answer type informs how the question should be presented in UI and how responses
 	// should be interpreted when read from mongodb.
 	private AnswerType answerType;
+	
+	public Question() {
+		this(null);
+	}
+	
+	public Question(Screener screener) {
+		this.prompt = "";
+		this.answerType = Question.AnswerType.STRING;
+		this.screener = screener;
+	}
 }

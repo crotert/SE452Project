@@ -1,8 +1,12 @@
-insert into screeners (description)
-values ('Please answer the following questions honestly. Your answers will help tailor class lectures.');
+insert into screeners (description, published)
+values ('Please answer the following questions honestly. Your answers will help tailor class lectures.',
+		false
+);
 
-insert into screeners (description)
-values ('Tell me about yourself and what you hope to get out of this class.');
+insert into screeners (description, published)
+values ('Tell me about yourself and what you hope to get out of this class.',
+		false
+);
 
 insert into questions (screener_id, prompt, answer_type)
 values (

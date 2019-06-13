@@ -15,4 +15,23 @@ public class OptionSet {
 	private ObjectId id;
 	private long questionId;
 	private ArrayList<String> options;
+	
+	public OptionSet() {
+		this(0);
+	}
+	
+	public OptionSet(long questionId) {
+		this.questionId = questionId;
+		this.options = new ArrayList<>();
+	}
+	
+	public void addOption() {
+		options.add("");
+	}
+	
+	public void removeOption(int index) {
+		if (index >= 0 && index < options.size()) {
+			options.remove(index);	
+		}
+	}
 }

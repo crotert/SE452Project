@@ -1,6 +1,7 @@
 create table screeners (
     id identity not null primary key,
-    description varchar(200)
+    description varchar(200),
+    published boolean
 );
 
 create table questions (
