@@ -9,9 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "feedback")
 public class Feedback implements Serializable {
 	
-	private String profFullName;
+	private String professorFullName;
 	
-	private String stuFullName;
+	private String studentFullName;
 		
 	private String positives;
 	

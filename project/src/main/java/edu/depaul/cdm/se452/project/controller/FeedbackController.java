@@ -36,21 +36,20 @@ public class FeedbackController implements WebMvcConfigurer {
 	}
 	
 	@GetMapping("/leaveFeedback")
-	public String getAll(Model model)
+	public String addFeedback(Model model)
 	{
 		model.addAttribute("feedback", new Feedback());
 		model.addAttribute("allFeedback", feedRepo.findAll());
 		return "feedback/leaveFeedback";
 	}
 	
-	@PostMapping("/allFeedback")
-	public String showFeedback( @Valid Feedback feedback, BindingResult bindingResult, Model model)
+	@PostMapping
+	public String saveFeedback(@ModelAttribute("feedback") Feedback feedback, BindingResult bindingResult)
 	{
-		if (bindingResult.hasErrors())
-		{
+		if(bindingResult.hasErrors()) {
 			return "feedback/leaveFeedback";
 		}
-		
-		return "feedback/leaveFeedback";
-	}
+		feedRepo.save(feedback);
+		return "redirect:/feedback/leaveFeedback";
+	}	
 }

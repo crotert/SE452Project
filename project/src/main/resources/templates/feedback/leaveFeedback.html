@@ -11,33 +11,33 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> 
     </head>
     <body>
-    	<div th:replace="fragments/feedbackHeader :: feedbackHeader"></div>
+    	<div th:replace="fragments/feedbackHeader :: header"></div>
         <div class="row justify-content-center">
-        	<form action="#" th:action="@{/feedback/allFeedback}" th:object="${feedback}" method="post">
+        	<form action="#" th:action="@{/feedback}" th:object="${feedback}" method="post">
   				<div class="input-group-prepend">
-  					<label class="input-group-text" for="profFullName">Professor Full Name</label>
-  					<input class="col-size-2 ml-2"  type="text" th:field="*{profFullName}" placeholder=" "/>
+  					<label class="input-group-text" for="professorFullName">Professor Full Name</label>
+  					<input class="col-size-2 ml-2"  type="text" th:field="*{professorFullName}" placeholder=" " required/>
   				</div>
   				<div class="input-group-prepend">
-  					<label class="input-group-text" for="stuFullName">Student Full Name</label>
-  					<input class="col-size-2 ml-2"  type="text" th:field="*{stuFullName}" placeholder=" "/>
+  					<label class="input-group-text" for="studentFullName">Student Full Name</label>
+  					<input class="col-size-2 ml-2"  type="text" th:field="*{studentFullName}" placeholder=" " required/>
   				</div> 
   				<div class="input-group-prepend">
-  					<label class="input-group-text" for="courseCode">Positives</label>
-  					<input class="col-size-2 ml-2"  type="text" th:field="*{positives}" placeholder=" "/>
+  					<label class="input-group-text" for="positives">Positives</label>
+  					<input class="col-size-2 ml-2"  type="text" th:field="*{positives}" placeholder=" " required/>
   				</div>  
   				<div class="input-group-prepend">
-  					<label class="input-group-text" for="courseCode">Negatives</label>
-  					<input class="col-size-2 ml-2"  type="text" th:field="*{negatives}" placeholder=" "/>
+  					<label class="input-group-text" for="negatives">Negatives</label>
+  					<input class="col-size-2 ml-2"  type="text" th:field="*{negatives}" placeholder=" " required/>
   				</div> 	
                 <div class="input-group-prepend">
-    				<label class="input-group-text" for="subject">Likely to Recommend</label>
-    				<select class="col-size-2 ml-2" th:field="*{likelyToRecommend}">
-    					<option value="1">Yes</option>
-    					<option value="2">No</option>
+    				<label class="input-group-text" for="likelyToRecommend">Likely to Recommend</label>
+    				<select class="col-size-2 ml-2" th:field="*{likelyToRecommend}" required>
+    					<option value="true">Yes</option>
+    					<option value="false">No</option>
   					</select>
   				</div>			
-                <button type="submit" class="btn btn-med btn-primary">Submit</button>            
+                <input type="submit" class="btn btn-med btn-primary"></button>            
             </form>
         </div>
         <div class="container"> 
@@ -51,11 +51,8 @@
         			</tr>
         		</thead>
         		<tbody>
-        			<tr th:if="${feedback.empty}">
-        				<td th:colspan="2">Feedback Not Found </td>
-        			</tr>
         			<tr th:each="feedback: ${allFeedback}">
-        				<td><span th:text="${feedback.profFullName}"> Professor </span></td>
+        				<td><span th:text="${feedback.professorFullName}"> Professor </span></td>
             			<td><span th:text="${feedback.positives}"> Positives </span></td>
             			<td><span th:text="${feedback.negatives}"> Negatives </span></td>
             			<td><span th:text="${feedback.likelyToRecommend}"> Likely To Recommend </span></td>	
