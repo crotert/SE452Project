@@ -49,19 +49,27 @@
         				<th> Description </th>
         				<th> Credits </th>
         				<th> Course Term </th>
+        				<th> Section </th>
+        				<th> Location </th>
         			</tr>
         		</thead>
         		<tbody>
         			<tr th:if="${courses.empty}">
         				<td th:colspan="2">No Courses Found </td>
         			</tr>
-        			<tr th:each="course: ${courses}">
-        				<td><span th:text="${course.courseNumber}"> Course </span></td>
-            			<td><span th:text="${course.subject}"> Subject </span></td>
-            			<td><span th:text="${course.courseDescription}"> Description </span>
-            			<td><span th:text="${course.courseCredits}"> Credits </span>
-            			<td><span th:text="${course.courseTerm}"> Term</span>
-        			</tr>
+        			<th:block th:each="course: ${courses}">
+        				<th:block>
+        					<tr th:each="section: ${course.courseSections}">
+        						<td><span th:text="${course.courseNumber}"> Course </span></td>
+            					<td><span th:text="${course.subject}"> Subject </span></td>
+            					<td><span th:text="${course.courseDescription}"> Description </span>
+            					<td><span th:text="${course.courseCredits}"> Credits </span>
+            					<td><span th:text="${course.courseTerm}"> Term</span>
+        						<td><span th:text="${section.sectionNumber}">Section Number</span></td>
+        						<td><span th:text="${section.meetingLocation}">Location</span>
+        					</tr>
+        				</th:block>
+        			</th:block>
         		</tbody>
         	</table>  
         </div> 

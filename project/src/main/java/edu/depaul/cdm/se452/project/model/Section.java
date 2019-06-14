@@ -43,7 +43,7 @@ public class Section implements Serializable {
 	//@Column
 	//holds the meeting location for the course section
 	//ONLINE for online courses
-	//private String meetingLocation;
+	private String meetingLocation;
 	
 	//@Column
 	//year value for when the section is offered
