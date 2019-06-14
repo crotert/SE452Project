@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import edu.depaul.cdm.se452.project.model.Advisors_To_Students;
+import edu.depaul.cdm.se452.project.model.AdvisorToStudents;
 import edu.depaul.cdm.se452.project.model.AdvisorToStudentsRepository;
 import edu.depaul.cdm.se452.project.model.Course;
 import edu.depaul.cdm.se452.project.model.CourseRepository;
@@ -51,7 +51,7 @@ public class AdvisorController implements WebMvcConfigurer {
 	@GetMapping(value="/showStudents")
 	public String showAllCourses(Model model)
 	{
-		model.addAttribute("Advisor_To_Students", new Advisors_To_Students());
+		model.addAttribute("Advisor_To_Students", new AdvisorToStudents());
 		model.addAttribute("Advisors_To_Students", advisorRepo.findAll());
 		model.addAttribute("course",new Course());
 		model.addAttribute("courses", courseRepo.findAll());
@@ -62,7 +62,7 @@ public class AdvisorController implements WebMvcConfigurer {
 	}
 	
 	@PostMapping("/courseSearch")
-	public String showCourses( @Valid Advisors_To_Students advisor, BindingResult bindingResult, Model model)
+	public String showCourses( @Valid AdvisorToStudents advisor, BindingResult bindingResult, Model model)
 	{
 		if (bindingResult.hasErrors())
 		{

@@ -24,7 +24,7 @@ import lombok.Data;
 @Entity
 @Table(name = "Advisors_To_Students")
 //@Document(collection = "advisor")
-public class Advisors_To_Students implements Serializable{
+public class AdvisorToStudents implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
