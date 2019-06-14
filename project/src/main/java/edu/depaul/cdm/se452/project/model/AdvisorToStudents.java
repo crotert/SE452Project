@@ -27,40 +27,16 @@ import lombok.Data;
 public class AdvisorToStudents implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	//@Id
 	//@Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int employeeid;
 	
 	//@JoinColumn(nullable = false)
 	//@Column
+	@Id
 	private int studentid;
 	
-	//private List<AdvisorToStudents>advisor;
 	
-	public int getEmployeeid() {
-		return employeeid;
-	}
-	
-	public int getStudentid() {
-		return studentid;
-	}
-	
-	public void setEmployeeid(int employeeid) {
-		this.employeeid=employeeid;
-	}
-	
-	public void setStudentid(int studentid) {
-		this.studentid=studentid;
-	}
-	 
-	//public List getadvisor() {
-	//	return advisor;
-	//}
-	
-	//public void setadvisor() {
-	//	this.advisor=advisor;
-	//}
-	 
 	
 }
