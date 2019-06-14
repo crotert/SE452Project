@@ -11,7 +11,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> 
     </head>
     <body>
-    	<div th:replace="fragments/header :: header"></div>
+    	
+    	<div th:replace="fragments/navbar :: navbar"></div>
         <div class="d-flex justify-content-start">
         <form action="#" th:action="@{/Advisor/showStudents}" th:object="${Advisor_To_Students}" method="post">
                 <div class="input-group-prepend">
@@ -30,16 +31,17 @@
             </form>
         </div>
          <div class="d-flex justify-content-end">
-         <form action="#" th:action="@{/Advisor/showStudents}" th:object="${Advisor_To_Students}" method="post">
+         <form action="#" th:action="@{/Advisor/foundStudents}" th:object="${Advisor_To_Students}" method="POST">
+         
                 <div class="input-group-prepend">
-    				<label class="input-group-text" for="studentid">Search for Students</label>
-    				<input class="col-size-2 ml-2"  type="text" th:field="*{studentid}" placeholder="Student ID"/>
+    				<label class="input-group-text" for="studentid">Add Student</label>
+    				<input class="col-size-2 ml-2"  type="text" th:field="*{studentid}" placeholder=123456>
   				</div> 
-  				</form>
-  				<form action="#" th:action="@{/Advisor/foundStudents}" th:object="${course}" method="POST">
+  				
+  				
                  <div class="input-group-prepend">
-    	    				<label class="input-group-text" for="courseNumber">Search for Courses</label>
-    				<input class="col-size-2 ml-2"  type="text" th:field="*{courseNumber}" placeholder="Course ID"/>
+    	    				<label class="input-group-text" for="courseNumber">Add Advisor</label>
+    				<input class="col-size-2 ml-2"  type="text" th:field="*{employeeid}" placeholder=123456>
   				
   				</div>
   				<button type="submit" class="btn btn-med btn-primary">Search</button>           
@@ -51,6 +53,7 @@
          <div class="d-flex justify-content-center">
          
          <div class="container"> 
+         <form action="#" th:action="@{/Advisor/addCourse/{id}(id=${course.courseNumber})}" th:object="${course}" method="POST">
         	<table class="table table-striped table-md table-bordered">
         		<thead>
         			<tr>
@@ -70,6 +73,8 @@
         			</tr>
         		</tbody>
         	</table>  	
+        	   </form>
+            
         </div> 
         </div>
         
