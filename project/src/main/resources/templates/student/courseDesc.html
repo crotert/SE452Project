@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <head th:replace="fragments/header :: common-header">
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/custom.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> 
+    </head>
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+    	<div th:replace="fragments/header :: header"></div>
+		<h1>Course Description Page</h1>
+		<h2>SE 452 Software Engineering</h2>
+
+        <div class="container"> 
+        	<table class="table table-striped table-md table-bordered">
+        		<thead>
+        			<tr>
+        				<th> Course Number </th>
+        				<th> Subject </th>
+        				<th> Description </th>
+        				<th> Credits </th>
+        				<th> Course Term </th>
+        				<th> Section </th>
+        				<th> Location </th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr th:if="${courses.empty}">
+        				<td th:colspan="2">No Courses Found </td>
+        			</tr>
+        			<th:block th:each="course: ${courses}">
+        				<th:block>
+        					<tr th:each="section: ${course.courseSections}">
+        						<td><span th:text="${course.courseNumber}"> Course </span></td>
+            					<td><span th:text="${course.subject}"> Subject </span></td>
+            					<td><span th:text="${course.courseDescription}"> Description </span>
+            					<td><span th:text="${course.courseCredits}"> Credits </span>
+            					<td><span th:text="${course.courseTerm}"> Term</span>
+        						<td><span th:text="${section.sectionNumber}">Section Number</span></td>
+        						<td><span th:text="${section.meetingLocation}">Location</span>
+        					</tr>
+        				</th:block>
+        			</th:block>
+        		</tbody>
+        	</table>
+        	<p>This course focuses on applying object-oriented techniques in the design, development, and integration of server-side enterprise applications using technologies such as servlets, Java Server Pages, and JDBC. Topics include web applications, multi-tier architecture, model-view-controller architecture, database connectivity, and security.
+				<br>
+				<br>
+				Warning: We will be going over advanced topics. There will be programming and you are expected to have application development background. You are encouraged to experiment with APIs. Not all the APIs will be covered in covered in class. However, the information on how to find such information will be provided.
+			</p>
+        </div> 
+        <div th:replace="fragments/footer :: footer"></div>    
+    </body>
+</html>
