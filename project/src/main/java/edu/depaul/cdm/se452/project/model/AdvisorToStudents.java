@@ -12,22 +12,55 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.List;
+
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
+
 @Data
 @Entity
-@Table(name = "AdvisorToStudents")
-public class AdvisorToStudents implements Serializable{
+@Table(name = "Advisors_To_Students")
+//@Document(collection = "advisor")
+public class Advisors_To_Students implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	//@ManyToOne
-	//@JoinColumn(nullable = false)
-	private int employeeId;
+	//@Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int employeeid;
 	
 	//@JoinColumn(nullable = false)
-	private int studentId;
+	//@Column
+	private int studentid;
 	
+	//private List<AdvisorToStudents>advisor;
+	
+	public int getEmployeeid() {
+		return employeeid;
+	}
+	
+	public int getStudentid() {
+		return studentid;
+	}
+	
+	public void setEmployeeid(int employeeid) {
+		this.employeeid=employeeid;
+	}
+	
+	public void setStudentid(int studentid) {
+		this.studentid=studentid;
+	}
+	 
+	//public List getadvisor() {
+	//	return advisor;
+	//}
+	
+	//public void setadvisor() {
+	//	this.advisor=advisor;
+	//}
+	 
 	
 }
