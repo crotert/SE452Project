@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> 
     </head>
     <body>
+    	<div th:replace="fragments/navbar :: navbar"></div>
     	<div th:replace="fragments/feedbackHeader :: header"></div>
         <div class="row justify-content-center">
         	<form action="#" th:action="@{/feedback}" th:object="${feedback}" method="post">
