@@ -1,0 +1,25 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/header :: common-header">
+    </head>
+    <body style="background-color: white">
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container">
+	    <div class="jumbotron">
+		  <h1 class="display-4">Welcome!</h1>
+		  <p class="lead">This is our Course Management System</p>
+		  <hr class="my-4">
+		  <dl>
+		  	<dt>Courses</dt>
+		  	<dd><a href="/student/addCourses">Add Course</a></dd>
+		  	<br>
+		  	<dt>Questionnaires</dt>
+		  	<dd><a href="/screener/admin">Admins</a></dd>
+		  	<dd><a href="/screener/all">Students</a></dd>
+		  	<br>
+		  </dl>
+		</div>
+	</div>
+	    <div th:replace="fragments/footer :: footer"></div>
+	</body>
+</html>
