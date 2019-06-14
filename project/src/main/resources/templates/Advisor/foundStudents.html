@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <head th:replace="fragments/header :: common-header">
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/custom.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> 
+    </head>
+    <body>
+    	<div th:replace="fragments/header :: header"></div>
+        <div class="d-flex justify-content-start">
+         				<form action="#" th:action="@{/Advisor/foundStudents}" th:object="${student}" method="POST">
+                  
+            
+          
+            
+            
+        </div>
+         <div class="d-flex justify-content-center">
+         
+         <div class="container"> 
+        	<table class="table table-striped table-md table-bordered">
+        		<thead>
+        			<tr>
+        				<th> Student Id </th>
+        				<th> First Name </th>
+        				<th> Last Name </th>
+        				<th> Email </th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr th:if="${students.empty}">
+        				<td th:colspan="2">No Students Found </td>
+        			</tr>
+        			<tr th:each="student: ${students}">
+        				<td><span th:text="${student.student_id}"> Course </span></td>
+            			<td><span th:text="${student.first_name}"> Subject </span></td>
+            			<td><span th:text="${student.last_name}"> Subject </span></td>
+            			<td><span th:text="${student.email}"> Subject </span></td>
+        			</tr>
+        		</tbody>
+        	</table>  	
+        </div> 
+        </form>
+        </div>
+      
+      </div>
+        <div th:replace="fragments/footer :: footer"></div>    
+    </body>
+</html>
