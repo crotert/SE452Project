@@ -22,6 +22,7 @@ import edu.depaul.cdm.se452.project.model.AdvisorToStudents;
 import edu.depaul.cdm.se452.project.model.AdvisorToStudentsRepository;
 import edu.depaul.cdm.se452.project.model.Course;
 import edu.depaul.cdm.se452.project.model.CourseRepository;
+import edu.depaul.cdm.se452.project.model.Feedback;
 import edu.depaul.cdm.se452.project.model.Student;
 import edu.depaul.cdm.se452.project.model.StudentRepository;
 
@@ -73,10 +74,14 @@ public class AdvisorController implements WebMvcConfigurer {
 	}
 	
 	@RequestMapping(value="/foundStudents", method=RequestMethod.POST)
-	public String searchcourses(Model model) {
+	public String searchcourses(@ModelAttribute("Advisor_To_Students") AdvisorToStudents Advisor_To_Students, Model model) {
 		
+		
+		advisorRepo.save(Advisor_To_Students);
 		model.addAttribute("student",new Student());
 		model.addAttribute("students",StudentRepo.findAll());
+		model.addAttribute("Advisor_To_Students", new AdvisorToStudents());
+		model.addAttribute("Advisors_To_Students", advisorRepo.findAll());
 		
 		
 		return ("Advisor/foundStudents");

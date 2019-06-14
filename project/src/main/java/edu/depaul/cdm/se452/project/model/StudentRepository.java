@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 //repository class to help perform CRUD operations on the students table
 public interface StudentRepository extends CrudRepository<Student, Long> {
 	//find a student by passing an id
-	//List<Student> findByStudentId(int num);
+	List<Student> findByStudentId(int num);
 	
 	@Override
 	//returns all students available

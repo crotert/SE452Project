@@ -27,7 +27,7 @@ public class Student implements Serializable {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int student_id;
+    private int studentId;
 	
 	//@Column
 	private String major;
@@ -44,25 +44,7 @@ public class Student implements Serializable {
 	//@Column
 	private String email;
 	
-	public int getStudent_id() {
-		return student_id;
-	}
 	
-	public String getMajor() {
-		return major;
-	}
-	public int getGpa() {
-		return gpa;
-	}
-	public String getFirst_name() {
-		return first_name;
-	}
-	public String getLast_name() {
-		return last_name;
-	}
-	public String getEmail() {
-		return email;
-	}
 		
 	//@JoinColumn
 	//@OneToOne(cascade = CascadeType.ALL)
