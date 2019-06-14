@@ -17,6 +17,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import edu.depaul.cdm.se452.project.model.Course;
 import edu.depaul.cdm.se452.project.model.CourseRepository;
+import edu.depaul.cdm.se452.project.model.Screener;
+import edu.depaul.cdm.se452.project.model.view.QuestionForm;
 
 @Controller
 @RequestMapping("/student")
@@ -38,6 +40,15 @@ public class StudentController implements WebMvcConfigurer {
 		return "student/addCourses";
 	}
 	
+	@GetMapping("/courseDesc")
+	public String showCourse(Model model)
+	{
+		model.addAttribute("course", new Course());
+		model.addAttribute("courses", courseRepo.findByCourseNumber(452));	
+		return "student/courseDesc";
+	}
+	
+
 	@PostMapping("/courseSearch")
 	public String showCourses( @Valid Course course, BindingResult bindingResult, Model model)
 	{
